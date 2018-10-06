@@ -67,8 +67,6 @@ services:
       - 9093:9093
     networks:
       - front_net
-    env_file:
-      - $HOME/.docker/alertmanager.secrets
   telegraf:
     image: ${USER_NAME}/telegraf:${TELEGRAF_VERSION}
     ports:
@@ -84,8 +82,8 @@ services:
     networks:
       - front_net
     volumes:
-      - $HOME/.docker/stackdriver.secrets:/stackdriver.secrets
-      - $HOME/.docker/gce-service-account.json:/gce-service-account.json
+      - ./stackdriver.secrets:/stackdriver.secrets
+      - ./gce-service-account.json:/gce-service-account.json
     environment:
       - STACKDRIVER_EXPORTER_MONITORING_METRICS_TYPE_PREFIXES="${STACKDRIVER_METRICS_PREFIXES}"
       - STACKDRIVER_EXPORTER_GOOGLE_PROJECT_ID=/stackdriver.secrets
